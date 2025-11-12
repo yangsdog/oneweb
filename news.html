@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻资讯 - 汉津莲源种藕基地</title>
+    <meta name="description" content="了解汉津莲源种藕基地的最新动态、行业资讯和莲藕种植知识">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    
+    <!-- Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary-green: #2D5A27;
+            --secondary-green: #7FB069;
+            --accent-gold: #D4A574;
+            --neutral-light: #F8F9FA;
+            --text-dark: #1F2937;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            line-height: 1.6;
+        }
+        
+        .font-serif {
+            font-family: 'Noto Serif SC', serif;
+        }
+        
+        .font-decorative {
+            font-family: 'ZCOOL KuaiLe', cursive;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(45, 90, 39, 0.8) 0%, rgba(127, 176, 105, 0.6) 100%),
+                        url('resources/planting-scene.png') center/cover no-repeat;
+            min-height: 60vh;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(45, 90, 39, 0.2);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45, 90, 39, 0.3);
+        }
+        
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .reveal-element.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .navbar-glass {
+            background: rgba(248, 249, 250, 0.95);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-solid {
+            background: var(--neutral-light);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-active {
+            background: var(--secondary-green);
+            color: white;
+        }
+        
+        .article-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .article-card:hover .article-overlay {
+            opacity: 1;
+        }
+        
+        .article-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(45, 90, 39, 0.8));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+        
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: #6B7280;
+        }
+        
+        .search-highlight {
+            background: yellow;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 navbar-glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="text-2xl font-serif font-bold text-green-800">
+                        汉津莲源
+                    </div>
+                    <div class="ml-2 text-sm text-green-600 font-decorative">
+                        种藕基地
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-green-800 hover:text-green-600 font-medium transition-colors">首页</a>
+                    <a href="products.html" class="nav-link text-green-800 hover:text-green-600 font-medium transition-colors">产品中心</a>
+                    <a href="about.html" class="nav-link text-green-800 hover:text-green-600 font-medium transition-colors">关于我们</a>
+                    <a href="news.html" class="nav-link text-green-600 font-medium">新闻资讯</a>
+                    <button class="btn-primary text-white px-6 py-2 rounded-full font-medium">
+                        联系我们
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-green-800 hover:text-green-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <div class="px-4 py-2 space-y-2">
+                <a href="index.html" class="block py-2 text-green-800 hover:text-green-600">首页</a>
+                <a href="products.html" class="block py-2 text-green-800 hover:text-green-600">产品中心</a>
+                <a href="about.html" class="block py-2 text-green-800 hover:text-green-600">关于我们</a>
+                <a href="news.html" class="block py-2 text-green-600">新闻资讯</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Page Header -->
+    <section class="hero-bg flex items-center justify-center relative">
+        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+        <div class="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
+            <h1 class="text-4xl md:text-6xl font-serif font-bold mb-6 reveal-element">
+                新闻资讯
+            </h1>
+            <p class="text-xl md:text-2xl reveal-element opacity-90">
+                了解我们的最新动态和行业资讯
+            </p>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Sidebar -->
+                <div class="lg:w-1/4">
+                    <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+                        <!-- Search -->
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-green-800 mb-3">搜索文章</h3>
+                            <div class="relative">
+                                <input type="text" id="search-input" placeholder="搜索关键词..." 
+                                       class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <!-- Categories -->
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-green-800 mb-3">文章分类</h3>
+                            <div class="space-y-2">
+                                <button class="category-btn w-full text-left px-4 py-2 rounded-lg hover:bg-green-50 transition-colors category-active" data-category="all">
+                                    全部分类
+                                </button>
+                                <button class="category-btn w-full text-left px-4 py-2 rounded-lg hover:bg-green-50 transition-colors" data-category="company">
+                                    公司动态
+                                </button>
+                                <button class="category-btn w-full text-left px-4 py-2 rounded-lg hover:bg-green-50 transition-colors" data-category="industry">
+                                    行业资讯
+                                </button>
+                                <button class="category-btn w-full text-left px-4 py-2 rounded-lg hover:bg-green-50 transition-colors" data-category="technology">
+                                    技术文章
+                                </button>
+                                <button class="category-btn w-full text-left px-4 py-2 rounded-lg hover:bg-green-50 transition-colors" data-category="knowledge">
+                                    种植知识
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Popular Articles -->
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-green-800 mb-3">热门文章</h3>
+                            <div class="space-y-3" id="popular-articles">
+                                <!-- Popular articles will be loaded here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Tags -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-green-800 mb-3">标签云</h3>
+                            <div class="flex flex-wrap gap-2" id="tags-cloud">
+                                <!-- Tags will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Articles Grid -->
+                <div class="lg:w-3/4">
+                    <!-- Featured Article -->
+                    <div class="mb-8 reveal-element">
+                        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                            <div class="md:flex">
+                                <div class="md:w-1/2">
+                                    <img src="resources/harvest-scene.png" alt="特色文章" class="w-full h-64 md:h-full object-cover">
+                                </div>
+                                <div class="md:w-1/2 p-8">
+                                    <div class="flex items-center mb-4">
+                                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full mr-3">热门</span>
+                                        <span class="text-sm text-gray-500">2024年11月3日</span>
+                                    </div>
+                                    <h2 class="text-2xl font-bold text-green-800 mb-4">
+                                        秋季莲藕大丰收，品质优良欢迎订购
+                                    </h2>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        今年秋季莲藕产量创新高，品质优良，口感清脆。我们采用传统有机种植方法，不使用化学农药，保证莲藕的天然纯净品质...
+                                    </p>
+                                    <div class="flex items-center justify-between">
+                                        <div class="article-meta">
+                                            <span>👁 1,234 阅读</span>
+                                            <span>💬 56 评论</span>
+                                            <span>👍 89 点赞</span>
+                                        </div>
+                                        <button class="btn-primary text-white px-6 py-2 rounded-full text-sm read-more-btn" data-article-id="1">
+                                            阅读全文
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Articles Grid -->
+                    <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Articles will be dynamically loaded here -->
+                    </div>
+                    
+                    <!-- Load More -->
+                    <div class="text-center mt-12">
+                        <button id="load-more" class="btn-primary text-white px-8 py-4 rounded-full font-medium text-lg">
+                            加载更多文章
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Article Detail Modal -->
+    <div id="article-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 id="modal-article-title" class="text-2xl font-bold text-green-800"></h3>
+                    <button id="close-article-modal" class="text-gray-400 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div id="modal-article-content" class="prose max-w-none">
+                    <!-- Article content will be loaded here -->
+                </div>
+                
+                <div class="mt-8 pt-6 border-t">
+                    <div class="flex items-center justify-between">
+                        <div class="article-meta">
+                            <span id="modal-article-date"></span>
+                            <span id="modal-article-views"></span>
+                            <span id="modal-article-likes"></span>
+                        </div>
+                        <button id="like-article" class="flex items-center space-x-2 text-green-600 hover:text-green-800">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                            <span>点赞</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-green-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="text-2xl font-serif font-bold">汉津莲源</div>
+                        <div class="ml-2 text-sm font-decorative">种藕基地</div>
+                    </div>
+                    <p class="text-green-200 mb-4">
+                        专业莲藕种植基地，传承百年种植技艺，为您提供最优质的莲藕产品。
+                    </p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">快速链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-green-200 hover:text-white">首页</a></li>
+                        <li><a href="products.html" class="text-green-200 hover:text-white">产品中心</a></li>
+                        <li><a href="about.html" class="text-green-200 hover:text-white">关于我们</a></li>
+                        <li><a href="news.html" class="text-green-200 hover:text-white">新闻资讯</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">联系我们</h4>
+                    <ul class="space-y-2 text-green-200">
+                        <li>📍 武汉市蔡甸区</li>
+                        <li>📞 400-123-4567</li>
+                        <li>✉️ info@hanjinlianyuan.com</li>
+                    </ul>
+                </div>
+                
+                <!-- Social Media -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">关注我们</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-green-200 hover:text-white">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-green-200 hover:text-white">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-green-800 mt-8 pt-8 text-center text-green-200">
+                <p>&copy; 2024 汉津莲源种藕基地. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+    <script>
+        // 文章数据
+        const articles = [
+            {
+                id: 1,
+                title: "秋季莲藕大丰收，品质优良欢迎订购",
+                category: "company",
+                summary: "今年秋季莲藕产量创新高，品质优良，口感清脆。我们采用传统有机种植方法，不使用化学农药，保证莲藕的天然纯净品质。",
+                content: `
+                    <h2>丰收喜讯</h2>
+                    <p>今年的秋季莲藕迎来了大丰收！经过我们团队的不懈努力和科学管理，莲藕产量创历史新高，总产量达到1200吨，比去年同期增长了20%。</p>
+                    
+                    <h3>品质保证</h3>
+                    <p>我们始终坚持有机种植理念，在整个种植过程中：</p>
+                    <ul>
+                        <li>不使用任何化学农药和化肥</li>
+                        <li>采用传统与现代相结合的种植技术</li>
+                        <li>严格控制水质和土壤环境</li>
+                        <li>定期进行品质检测和监控</li>
+                    </ul>
+                    
+                    <h3>产品特色</h3>
+                    <p>今年的莲藕具有以下特点：</p>
+                    <ul>
+                        <li><strong>口感清脆</strong>：肉质细腻，口感爽脆</li>
+                        <li><strong>营养丰富</strong>：含有丰富的维生素和矿物质</li>
+                        <li><strong>外观优美</strong>：形状规整，色泽洁白</li>
+                        <li><strong>保鲜期长</strong>：采用专业保鲜技术，延长保质期</li>
+                    </ul>
+                    
+                    <h3>订购信息</h3>
+                    <p>目前我们接受各种规格的订单：</p>
+                    <ul>
+                        <li>新鲜莲藕：15.8元/斤</li>
+                        <li>有机莲藕：25.6元/斤</li>
+                        <li>特级莲藕：22.8元/斤</li>
+                        <li>大宗采购：价格面议</li>
+                    </ul>
+                    
+                    <p>欢迎新老客户前来订购，我们将为您提供最优质的产品和服务！</p>
+                `,
+                image: "resources/harvest-scene.png",
+                date: "2024-11-03",
+                views: 1234,
+                likes: 89,
+                comments: 56,
+                tags: ["丰收", "秋季", "有机种植", "品质"],
+                featured: true
+            },
+            {
+                id: 2,
+                title: "新技术提升莲藕种植效率，产量增长30%",
+                category: "technology",
+                summary: "公司引进先进种植技术，通过科学管理和技术创新，成功将莲藕产量提升30%，同时保证了产品品质。",
+                content: `
+                    <h2>技术革新成果</h2>
+                    <p>经过两年的研究和实践，我们公司成功引进并改良了一套先进的莲藕种植技术体系，取得了显著的成效。</p>
+                    
+                    <h3>技术创新亮点</h3>
+                    <ul>
+                        <li><strong>智能监控系统</strong>：实时监测水质、温度和湿度</li>
+                        <li><strong>精准施肥技术</strong>：根据莲藕生长需求精确配比营养</li>
+                        <li><strong>病虫害防治</strong>：采用生物防治方法，绿色环保</li>
+                        <li><strong>自动化设备</strong>：减少人工成本，提高效率</li>
+                    </ul>
+                    
+                    <h3>取得的成效</h3>
+                    <p>通过技术应用，我们实现了：</p>
+                    <ul>
+                        <li>产量提升30%，达到亩产2.5吨</li>
+                        <li>品质稳定性提高，合格率98%以上</li>
+                        <li>成本降低15%，经济效益显著提升</li>
+                        <li>环境污染减少，实现可持续发展</li>
+                    </ul>
+                    
+                    <h3>未来规划</h3>
+                    <p>我们将继续加大技术研发投入，计划在明年实现：</p>
+                    <ul>
+                        <li>全面智能化管理</li>
+                        <li>品种改良和优化</li>
+                        <li>深加工产品开发</li>
+                        <li>产业链延伸</li>
+                    </ul>
+                `,
+                image: "resources/planting-scene.png",
+                date: "2024-10-15",
+                views: 856,
+                likes: 67,
+                comments: 34,
+                tags: ["技术创新", "产量提升", "智能化", "效率"],
+                featured: false
+            },
+            {
+                id: 3,
+                title: "莲藕营养价值及食用方法介绍",
+                category: "knowledge",
+                summary: "莲藕不仅口感清脆，还富含多种营养成分。本文详细介绍莲藕的营养价值和多种食用方法。",
+                content: `
+                    <h2>莲藕的营养价值</h2>
+                    <p>莲藕是一种营养丰富的食材，含有多种对人体有益的成分：</p>
+                    
+                    <h3>主要营养成分</h3>
+                    <ul>
+                        <li><strong>碳水化合物</strong>：提供能量，每100g含17.2g</li>
+                        <li><strong>蛋白质</strong>：2.6g/100g，含有必需氨基酸</li>
+                        <li><strong>维生素C</strong>：抗氧化，增强免疫力</li>
+                        <li><strong>膳食纤维</strong>：促进消化，预防便秘</li>
+                        <li><strong>矿物质</strong>：钾、钙、铁、锌等</li>
+                    </ul>
+                    
+                    <h3>健康功效</h3>
+                    <ul>
+                        <li>清热解毒，生津止渴</li>
+                        <li>健脾开胃，促进消化</li>
+                        <li>补血养颜，美容养颜</li>
+                        <li>降血压，保护心血管</li>
+                        <li>增强免疫力，抗疲劳</li>
+                    </ul>
+                    
+                    <h3>食用方法推荐</h3>
+                    <h4>1. 凉拌莲藕</h4>
+                    <p>将莲藕切片焯水，加入调料凉拌，口感清脆爽口。</p>
+                    
+                    <h4>2. 莲藕排骨汤</h4>
+                    <p>莲藕与排骨一起炖煮，汤汁鲜美，营养丰富。</p>
+                    
+                    <h4>3. 炒莲藕</h4>
+                    <p>莲藕切片与肉类或蔬菜一起炒制，保持脆嫩口感。</p>
+                    
+                    <h4>4. 莲藕粉</h4>
+                    <p>将莲藕制成粉末，可冲泡饮用或用于烘焙。</p>
+                    
+                    <h3>选购技巧</h3>
+                    <ul>
+                        <li>选择表面光滑、无斑点的莲藕</li>
+                        <li>质地坚实，手感沉重的为佳</li>
+                        <li>断面洁白，无异味的莲藕</li>
+                        <li>避免选择发黑或有异味的莲藕</li>
+                    </ul>
+                    
+                    <h3>保存方法</h3>
+                    <p>新鲜莲藕应存放在阴凉通风处，或放入冰箱冷藏保存，一般可保存7-10天。</p>
+                `,
+                image: "resources/premium-lotus-roots.png",
+                date: "2024-09-28",
+                views: 2341,
+                likes: 156,
+                comments: 89,
+                tags: ["营养价值", "食用方法", "健康", "选购技巧"],
+                featured: false
+            },
+            {
+                id: 4,
+                title: "莲藕行业发展趋势分析报告",
+                category: "industry",
+                summary: "深入分析当前莲藕行业的发展现状、市场趋势和未来前景，为行业发展提供参考。",
+                content: `
+                    <h2>行业现状分析</h2>
+                    <p>莲藕作为传统的水生蔬菜，近年来市场需求稳步增长，行业发展呈现出良好的态势。</p>
+                    
+                    <h3>市场规模</h3>
+                    <p>据统计，2024年全国莲藕种植面积达到150万亩，总产量约300万吨，市场价值超过100亿元。</p>
+                    
+                    <h3>消费趋势</h3>
+                    <ul>
+                        <li><strong>健康意识提升</strong>：消费者更青睐有机、绿色产品</li>
+                        <li><strong>深加工需求增长</strong>：莲藕粉、莲藕片等产品受欢迎</li>
+                        <li><strong>电商渠道兴起</strong>：线上销售占比逐年提高</li>
+                        <li><strong>出口市场扩大</strong>：国际市场需求稳定增长</li>
+                    </ul>
+                    
+                    <h3>技术发展</h3>
+                    <ul>
+                        <li>智能化种植技术逐步普及</li>
+                        <li>品种改良取得重要突破</li>
+                        <li>加工工艺不断改进</li>
+                        <li>保鲜技术显著提升</li>
+                    </ul>
+                    
+                    <h3>发展机遇</h3>
+                    <ul>
+                        <li>政策支持力度加大</li>
+                        <li>消费升级带来新需求</li>
+                        <li>技术创新推动产业升级</li>
+                        <li>国际市场潜力巨大</li>
+                    </ul>
+                    
+                    <h3>面临挑战</h3>
+                    <ul>
+                        <li>气候变化影响产量</li>
+                        <li>劳动力成本上升</li>
+                        <li>市场竞争加剧</li>
+                        <li>质量标准有待统一</li>
+                    </ul>
+                    
+                    <h3>未来展望</h3>
+                    <p>预计到2030年，莲藕行业将实现以下目标：</p>
+                    <ul>
+                        <li>种植面积达到200万亩</li>
+                        <li>总产量突破500万吨</li>
+                        <li>深加工产品占比30%以上</li>
+                        <li>出口量增长50%</li>
+                    </ul>
+                `,
+                image: "https://kimi-web-img.moonshot.cn/img/shun-gate.com/637cc528b6785a502cc46000dcd1c7b953acb2dd.jpg",
+                date: "2024-09-10",
+                views: 1678,
+                likes: 98,
+                comments: 45,
+                tags: ["行业分析", "市场趋势", "发展机遇", "未来展望"],
+                featured: false
+            },
+            {
+                id: 5,
+                title: "有机莲藕种植技术要点详解",
+                category: "technology",
+                summary: "详细介绍有机莲藕的种植技术要求、管理要点和注意事项，帮助种植户提高种植水平。",
+                content: `
+                    <h2>有机种植理念</h2>
+                    <p>有机莲藕种植是指在种植过程中不使用化学合成的农药、化肥、生长调节剂等物质，遵循自然规律和生态学原理的种植方式。</p>
+                    
+                    <h3>种植环境要求</h3>
+                    <ul>
+                        <li><strong>水质要求</strong>：水源清洁，无污染，pH值6.5-7.5</li>
+                        <li><strong>土壤条件</strong>：肥沃的淤泥土，有机质含量丰富</li>
+                        <li><strong>气候条件</strong>：温暖湿润，年平均温度15-25℃</li>
+                        <li><strong>光照条件</strong>：充足的光照，日照时数2000小时以上</li>
+                    </ul>
+                    
+                    <h3>品种选择</h3>
+                    <p>选择适合当地气候条件的优良品种，要求：</p>
+                    <ul>
+                        <li>抗病性强，适应性广</li>
+                        <li>产量高，品质好</li>
+                        <li>市场需求量大</li>
+                        <li>符合有机认证标准</li>
+                    </ul>
+                    
+                    <h3>种植技术要点</h3>
+                    <h4>1. 整地施肥</h4>
+                    <ul>
+                        <li>深耕30-40cm，清除杂草</li>
+                        <li>施足基肥，每亩施腐熟有机肥2000-3000kg</li>
+                        <li>整平土地，做好排灌系统</li>
+                    </ul>
+                    
+                    <h4>2. 种藕选择</h4>
+                    <ul>
+                        <li>选择健康、无病虫害的种藕</li>
+                        <li>种藕重量150-200g为宜</li>
+                        <li>顶芽完整，藕节粗壮</li>
+                    </ul>
+                    
+                    <h4>3. 栽植方法</h4>
+                    <ul>
+                        <li>栽植时间：3-4月份</li>
+                        <li>栽植密度：行距1.5m，株距1m</li>
+                        <li>栽植深度：10-15cm</li>
+                        <li>覆土压实，浇透水</li>
+                    </ul>
+                    
+                    <h3>田间管理</h3>
+                    <h4>水分管理</h4>
+                    <ul>
+                        <li>萌芽期：保持浅水层，水深5-10cm</li>
+                        <li>生长期：逐渐加深水位至30-50cm</li>
+                        <li>结藕期：降低水位，利于莲藕形成</li>
+                    </ul>
+                    
+                    <h4>施肥管理</h4>
+                    <ul>
+                        <li>基肥：腐熟有机肥为主</li>
+                        <li>追肥：使用有机认证的鱼肥、骨粉等</li>
+                        <li>叶面喷肥：使用海藻提取物等</li>
+                    </ul>
+                    
+                    <h4>病虫害防治</h4>
+                    <ul>
+                        <li>物理防治：灯光诱杀、人工捕捉</li>
+                        <li>生物防治：释放天敌、使用生物农药</li>
+                        <li>农业防治：合理轮作、清除病残体</li>
+                    </ul>
+                    
+                    <h3>收获与储存</h3>
+                    <ul>
+                        <li>收获时间：10-11月份</li>
+                        <li>收获标准：叶片发黄，莲藕充实</li>
+                        <li>储存条件：阴凉通风，温度5-10℃</li>
+                        <li>储存时间：一般可保存2-3个月</li>
+                    </ul>
+                `,
+                image: "https://kimi-web-img.moonshot.cn/img/www.bellobello.my/906eb3ac5da2a0e6660fe777159d105d068dee04.jpg",
+                date: "2024-08-25",
+                views: 3421,
+                likes: 234,
+                comments: 123,
+                tags: ["有机种植", "技术要求", "田间管理", "病虫害防治"],
+                featured: false
+            },
+            {
+                id: 6,
+                title: "公司新产品发布会圆满成功",
+                category: "company",
+                summary: "公司成功举办新产品发布会，推出多款莲藕深加工产品，受到市场和客户的广泛好评。",
+                content: `
+                    <h2>发布会盛况</h2>
+                    <p>2024年8月20日，汉津莲源种藕基地在新产品发布会上，正式推出了多款莲藕深加工产品，标志着公司产品线的进一步丰富。</p>
+                    
+                    <h3>新产品介绍</h3>
+                    <h4>1. 有机莲藕粉</h4>
+                    <ul>
+                        <li>采用100%有机莲藕制作</li>
+                        <li>纯天然，无添加剂</li>
+                        <li>营养丰富，易于吸收</li>
+                        <li>适合各年龄段人群</li>
+                    </ul>
+                    
+                    <h4>2. 即食莲藕片</h4>
+                    <ul>
+                        <li>真空包装，开袋即食</li>
+                        <li>保持莲藕原有口感</li>
+                        <li>多种口味可选</li>
+                        <li>保质期长，便于储存</li>
+                    </ul>
+                    
+                    <h4>3. 莲藕营养饮品</h4>
+                    <ul>
+                        <li>提取莲藕精华成分</li>
+                        <li>添加天然果汁调味</li>
+                        <li>富含维生素和矿物质</li>
+                        <li>包装精美，适合送礼</li>
+                    </ul>
+                    
+                    <h3>市场反响</h3>
+                    <p>新产品发布后，受到了参会客户和媒体的一致好评：</p>
+                    <ul>
+                        <li>现场签约订单金额超过500万元</li>
+                        <li>媒体报道覆盖人群超过100万</li>
+                        <li>客户满意度达到95%以上</li>
+                        <li>预计年销售额增长30%</li>
+                    </ul>
+                    
+                    <h3>技术优势</h3>
+                    <ul>
+                        <li>采用先进的加工工艺</li>
+                        <li>保持营养成分不流失</li>
+                        <li>严格的质量控制体系</li>
+                        <li>符合食品安全标准</li>
+                    </ul>
+                    
+                    <h3>未来规划</h3>
+                    <p>公司将继续加大产品研发投入，计划在明年推出更多创新产品，满足不同消费者的需求。</p>
+                `,
+                image: "https://kimi-web-img.moonshot.cn/img/m.media-amazon.com/dad41f6e33b53a9e9dabb2f75ca74b8bbbd16a35.jpg",
+                date: "2024-08-20",
+                views: 987,
+                likes: 76,
+                comments: 42,
+                tags: ["新产品", "发布会", "深加工", "市场反响"],
+                featured: false
+            }
+        ];
+        
+        let currentCategory = 'all';
+        let currentSearchTerm = '';
+        let displayedArticles = 6;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initNewsPage();
+        });
+        
+        function initNewsPage() {
+            renderArticles(articles);
+            renderPopularArticles();
+            renderTagsCloud();
+            initCategoryFilters();
+            initSearch();
+            initModal();
+            initScrollAnimations();
+        }
+        
+        function renderArticles(articlesToRender) {
+            const grid = document.getElementById('articles-grid');
+            const articlesToShow = articlesToRender.slice(0, displayedArticles);
+            
+            grid.innerHTML = articlesToShow.map(article => `
+                <article class="article-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover reveal-element">
+                    <div class="relative">
+                        <img src="${article.image}" alt="${article.title}" class="w-full h-48 object-cover">
+                        <div class="article-overlay">
+                            <button class="btn-primary text-white px-4 py-2 rounded-full text-sm read-more-btn" data-article-id="${article.id}">
+                                阅读全文
+                            </button>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-${getCategoryColor(article.category)}-100 text-${getCategoryColor(article.category)}-800 text-xs px-2 py-1 rounded-full">
+                                ${getCategoryName(article.category)}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-3 line-clamp-2">${article.title}</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">${article.summary}</p>
+                        <div class="article-meta">
+                            <span>📅 ${article.date}</span>
+                            <span>👁 ${article.views}</span>
+                            <span>💬 ${article.comments}</span>
+                            <span>👍 ${article.likes}</span>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+            
+            // 更新加载更多按钮
+            const loadMoreBtn = document.getElementById('load-more');
+            if (articlesToRender.length <= displayedArticles) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'block';
+            }
+            
+            // 重新初始化滚动动画
+            initScrollAnimations();
+        }
+        
+        function renderPopularArticles() {
+            const container = document.getElementById('popular-articles');
+            const popularArticles = articles
+                .sort((a, b) => b.views - a.views)
+                .slice(0, 5);
+            
+            container.innerHTML = popularArticles.map(article => `
+                <div class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer popular-article-item" data-article-id="${article.id}">
+                    <img src="${article.image}" alt="${article.title}" class="w-12 h-12 object-cover rounded">
+                    <div class="flex-1 min-w-0">
+                        <h4 class="text-sm font-medium text-gray-800 line-clamp-2">${article.title}</h4>
+                        <p class="text-xs text-gray-500 mt-1">${article.views} 阅读</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function renderTagsCloud() {
+            const container = document.getElementById('tags-cloud');
+            const allTags = articles.flatMap(article => article.tags);
+            const tagCounts = allTags.reduce((acc, tag) => {
+                acc[tag] = (acc[tag] || 0) + 1;
+                return acc;
+            }, {});
+            
+            const uniqueTags = [...new Set(allTags)];
+            
+            container.innerHTML = uniqueTags.map(tag => `
+                <button class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm hover:bg-green-100 hover:text-green-600 transition-colors tag-btn" data-tag="${tag}">
+                    ${tag} (${tagCounts[tag]})
+                </button>
+            `).join('');
+        }
+        
+        function initCategoryFilters() {
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 更新按钮状态
+                    categoryBtns.forEach(b => b.classList.remove('category-active'));
+                    this.classList.add('category-active');
+                    
+                    // 更新当前分类
+                    currentCategory = this.dataset.category;
+                    displayedArticles = 6; // 重置显示数量
+                    
+                    // 应用筛选
+                    applyFilters();
+                });
+            });
+        }
+        
+        function initSearch() {
+            const searchInput = document.getElementById('search-input');
+            let searchTimeout;
+            
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    currentSearchTerm = this.value.toLowerCase();
+                    displayedArticles = 6; // 重置显示数量
+                    applyFilters();
+                }, 300);
+            });
+            
+            // 标签搜索
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('tag-btn')) {
+                    const tag = e.target.dataset.tag;
+                    searchInput.value = tag;
+                    currentSearchTerm = tag.toLowerCase();
+                    displayedArticles = 6; // 重置显示数量
+                    applyFilters();
+                }
+            });
+            
+            // 热门文章点击
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.popular-article-item')) {
+                    const articleId = parseInt(e.target.closest('.popular-article-item').dataset.articleId);
+                    const article = articles.find(a => a.id === articleId);
+                    if (article) {
+                        showArticleModal(article);
+                    }
+                }
+            });
+        }
+        
+        function applyFilters() {
+            let filteredArticles = [...articles];
+            
+            // 分类筛选
+            if (currentCategory !== 'all') {
+                filteredArticles = filteredArticles.filter(article => 
+                    article.category === currentCategory
+                );
+            }
+            
+            // 搜索筛选
+            if (currentSearchTerm) {
+                filteredArticles = filteredArticles.filter(article =>
+                    article.title.toLowerCase().includes(currentSearchTerm) ||
+                    article.summary.toLowerCase().includes(currentSearchTerm) ||
+                    article.tags.some(tag => tag.toLowerCase().includes(currentSearchTerm))
+                );
+            }
+            
+            renderArticles(filteredArticles);
+        }
+        
+        function initModal() {
+            const modal = document.getElementById('article-modal');
+            const closeModal = document.getElementById('close-article-modal');
+            const likeBtn = document.getElementById('like-article');
+            
+            // 阅读全文按钮事件
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('read-more-btn')) {
+                    const articleId = parseInt(e.target.dataset.articleId);
+                    const article = articles.find(a => a.id === articleId);
+                    if (article) {
+                        showArticleModal(article);
+                    }
+                }
+            });
+            
+            closeModal.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+            
+            likeBtn.addEventListener('click', function() {
+                const articleId = parseInt(this.dataset.articleId);
+                const article = articles.find(a => a.id === articleId);
+                if (article) {
+                    article.likes++;
+                    document.getElementById('modal-article-likes').textContent = `👍 ${article.likes} 点赞`;
+                    this.classList.add('text-red-500');
+                }
+            });
+            
+            // 加载更多按钮
+            document.getElementById('load-more').addEventListener('click', function() {
+                displayedArticles += 6;
+                applyFilters();
+            });
+        }
+        
+        function showArticleModal(article) {
+            const modal = document.getElementById('article-modal');
+            const modalTitle = document.getElementById('modal-article-title');
+            const modalContent = document.getElementById('modal-article-content');
+            const modalDate = document.getElementById('modal-article-date');
+            const modalViews = document.getElementById('modal-article-views');
+            const modalLikes = document.getElementById('modal-article-likes');
+            const likeBtn = document.getElementById('like-article');
+            
+            modalTitle.textContent = article.title;
+            modalContent.innerHTML = article.content;
+            modalDate.textContent = `📅 ${article.date}`;
+            modalViews.textContent = `👁 ${article.views} 阅读`;
+            modalLikes.textContent = `👍 ${article.likes} 点赞`;
+            likeBtn.dataset.articleId = article.id;
+            
+            // 增加阅读数
+            article.views++;
+            
+            modal.classList.remove('hidden');
+            
+            // 高亮搜索词
+            if (currentSearchTerm) {
+                highlightSearchTerms(modalContent, currentSearchTerm);
+            }
+        }
+        
+        function highlightSearchTerms(element, searchTerm) {
+            const walker = document.createTreeWalker(
+                element,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+            
+            const textNodes = [];
+            let node;
+            while (node = walker.nextNode()) {
+                textNodes.push(node);
+            }
+            
+            textNodes.forEach(textNode => {
+                const text = textNode.textContent;
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                if (regex.test(text)) {
+                    const highlightedText = text.replace(regex, '<span class="search-highlight">$1</span>');
+                    const wrapper = document.createElement('span');
+                    wrapper.innerHTML = highlightedText;
+                    textNode.parentNode.replaceChild(wrapper, textNode);
+                }
+            });
+        }
+        
+        function getCategoryColor(category) {
+            const colors = {
+                'company': 'blue',
+                'industry': 'purple',
+                'technology': 'green',
+                'knowledge': 'yellow'
+            };
+            return colors[category] || 'gray';
+        }
+        
+        function getCategoryName(category) {
+            const names = {
+                'company': '公司动态',
+                'industry': '行业资讯',
+                'technology': '技术文章',
+                'knowledge': '种植知识'
+            };
+            return names[category] || '其他';
+        }
+        
+        function initScrollAnimations() {
+            const revealElements = document.querySelectorAll('.reveal-element');
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            revealElements.forEach(element => {
+                revealObserver.observe(element);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汉津莲源种藕基地 - 蔡甸莲藕专业种植</title>
+    <meta name="description" content="汉津莲源种藕基地专业从事蔡甸莲藕种植，提供优质种藕和鲜食莲藕产品，传承百年莲藕种植技艺">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    
+    <!-- Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    
+    <!-- ECharts for Data Visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    
+    <!-- p5.js for Creative Effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary-green: #2D5A27;
+            --secondary-green: #7FB069;
+            --accent-gold: #D4A574;
+            --neutral-light: #F8F9FA;
+            --text-dark: #1F2937;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            line-height: 1.6;
+        }
+        
+        .font-serif {
+            font-family: 'Noto Serif SC', serif;
+        }
+        
+        .font-decorative {
+            font-family: 'ZCOOL KuaiLe', cursive;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(45, 90, 39, 0.8) 0%, rgba(127, 176, 105, 0.6) 100%),
+                        url('resources/hero-lotus-farm.png') center/cover no-repeat;
+            min-height: 100vh;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--secondary-green), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(45, 90, 39, 0.2);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45, 90, 39, 0.3);
+        }
+        
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .reveal-element.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .navbar-glass {
+            background: rgba(248, 249, 250, 0.95);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-solid {
+            background: var(--neutral-light);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Particles Background -->
+    <div id="particles-canvas"></div>
+    
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 navbar-glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="text-2xl font-serif font-bold text-green-800">
+                        汉津莲源
+                    </div>
+                    <div class="ml-2 text-sm text-green-600 font-decorative">
+                        种藕基地
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-green-800 hover:text-green-600 font-medium transition-colors">首页</a>
+                    <a href="products.html" class="nav-link text-green-800 hover:text-green-600 font-medium transition-colors">产品中心</a>
+                    <a href="about.html" class="nav-link text-green-800 hover:text-green-600 font-medium transition-colors">关于我们</a>
+                    <a href="news.html" class="nav-link text-green-800 hover:text-green-600 font-medium transition-colors">新闻资讯</a>
+                    <button class="btn-primary text-white px-6 py-2 rounded-full font-medium">
+                        联系我们
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-green-800 hover:text-green-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <div class="px-4 py-2 space-y-2">
+                <a href="#home" class="block py-2 text-green-800 hover:text-green-600">首页</a>
+                <a href="products.html" class="block py-2 text-green-800 hover:text-green-600">产品中心</a>
+                <a href="about.html" class="block py-2 text-green-800 hover:text-green-600">关于我们</a>
+                <a href="news.html" class="block py-2 text-green-800 hover:text-green-600">新闻资讯</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+        <div class="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
+            <h1 class="text-4xl md:text-6xl font-serif font-bold mb-6 reveal-element">
+                <span class="gradient-text">汉津莲源</span><br>
+                专业种藕基地
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 reveal-element opacity-90">
+                传承百年莲藕种植技艺，培育优质蔡甸莲藕<br>
+                为您提供最纯净的有机莲藕产品
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center reveal-element">
+                <button class="btn-primary text-white px-8 py-4 rounded-full font-medium text-lg">
+                    探索产品
+                </button>
+                <button class="border-2 border-white text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-white hover:text-green-800 transition-all">
+                    基地参观
+                </button>
+            </div>
+        </div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 floating-animation opacity-30">
+            <div class="w-16 h-16 bg-white rounded-full"></div>
+        </div>
+        <div class="absolute bottom-20 right-10 floating-animation opacity-30" style="animation-delay: -2s;">
+            <div class="w-12 h-12 bg-green-200 rounded-full"></div>
+        </div>
+    </section>
+    
+    <!-- Company Highlights -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-element">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-green-800 mb-4">
+                    我们的优势
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    专注莲藕种植数十年，以专业和品质赢得客户信赖
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Highlight 1 -->
+                <div class="text-center reveal-element">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-green-800 mb-4">有机种植</h3>
+                    <p class="text-gray-600">
+                        采用传统有机种植方法，不使用化学农药，保证莲藕的天然纯净品质
+                    </p>
+                </div>
+                
+                <!-- Highlight 2 -->
+                <div class="text-center reveal-element">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-green-800 mb-4">品质保证</h3>
+                    <p class="text-gray-600">
+                        严格的质量控制体系，每一根莲藕都经过精心挑选，确保最佳品质
+                    </p>
+                </div>
+                
+                <!-- Highlight 3 -->
+                <div class="text-center reveal-element">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-green-800 mb-4">快速配送</h3>
+                    <p class="text-gray-600">
+                        完善的物流配送体系，确保新鲜莲藕能够快速送达您的手中
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Featured Products -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-element">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-green-800 mb-4">
+                    精选产品
+                </h2>
+                <p class="text-xl text-gray-600">
+                    为您精心挑选的优质莲藕产品
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product 1 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover reveal-element">
+                    <div class="h-48 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
+                        <img src="https://kimi-web-img.moonshot.cn/img/img.21food.com/c79d24f51f51d58b490329a03316aa40418cb897.jpg" 
+                             alt="新鲜莲藕" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-2">新鲜莲藕</h3>
+                        <p class="text-gray-600 mb-4">精选优质莲藕，口感清脆，营养丰富</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-green-600">¥15.8</span>
+                            <button class="btn-primary text-white px-4 py-2 rounded-full text-sm">
+                                立即购买
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover reveal-element">
+                    <div class="h-48 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
+                        <img src="https://kimi-web-img.moonshot.cn/img/strictlymedicinalseeds.com/598c70bcf67b18e46f26dc01fff01a880099934e.jpg" 
+                             alt="种藕种苗" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-2">种藕种苗</h3>
+                        <p class="text-gray-600 mb-4">优质种藕种苗，成活率高，产量稳定</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-green-600">¥28.0</span>
+                            <button class="btn-primary text-white px-4 py-2 rounded-full text-sm">
+                                立即购买
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover reveal-element">
+                    <div class="h-48 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
+                        <img src="https://kimi-web-img.moonshot.cn/img/naturallifestylemarket.com/4dc1a12a4b02d39262699b35830f4fc56f8f63f2.jpg" 
+                             alt="有机莲藕" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-2">有机莲藕</h3>
+                        <p class="text-gray-600 mb-4">有机认证莲藕，无农药残留，健康安全</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-green-600">¥25.6</span>
+                            <button class="btn-primary text-white px-4 py-2 rounded-full text-sm">
+                                立即购买
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 reveal-element">
+                <a href="products.html" class="btn-primary text-white px-8 py-4 rounded-full font-medium text-lg inline-block">
+                    查看更多产品
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Statistics Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-element">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-green-800 mb-4">
+                    基地实力
+                </h2>
+                <p class="text-xl text-gray-600">
+                    数据见证我们的专业实力
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center reveal-element">
+                    <div class="text-4xl md:text-5xl font-bold text-green-600 mb-2" data-count="500">0</div>
+                    <div class="text-gray-600">亩种植面积</div>
+                </div>
+                <div class="text-center reveal-element">
+                    <div class="text-4xl md:text-5xl font-bold text-green-600 mb-2" data-count="15">0</div>
+                    <div class="text-gray-600">年种植经验</div>
+                </div>
+                <div class="text-center reveal-element">
+                    <div class="text-4xl md:text-5xl font-bold text-green-600 mb-2" data-count="98">0</div>
+                    <div class="text-gray-600">%客户满意度</div>
+                </div>
+                <div class="text-center reveal-element">
+                    <div class="text-4xl md:text-5xl font-bold text-green-600 mb-2" data-count="1000">0</div>
+                    <div class="text-gray-600">吨年产量</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Latest News -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-element">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-green-800 mb-4">
+                    最新动态
+                </h2>
+                <p class="text-xl text-gray-600">
+                    了解我们的最新发展和行业资讯
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- News 1 -->
+                <article class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover reveal-element">
+                    <div class="h-48 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
+                        <img src="resources/harvest-scene.png" alt="收获场景" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="text-sm text-green-600 mb-2">2024年11月</div>
+                        <h3 class="text-xl font-bold text-green-800 mb-3">秋季莲藕大丰收</h3>
+                        <p class="text-gray-600 mb-4">今年秋季莲藕产量创新高，品质优良，欢迎新老客户订购。</p>
+                        <a href="news.html" class="text-green-600 hover:text-green-800 font-medium">
+                            阅读更多 →
+                        </a>
+                    </div>
+                </article>
+                
+                <!-- News 2 -->
+                <article class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover reveal-element">
+                    <div class="h-48 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
+                        <img src="resources/planting-scene.png" alt="种植技术" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="text-sm text-green-600 mb-2">2024年10月</div>
+                        <h3 class="text-xl font-bold text-green-800 mb-3">新技术提升种植效率</h3>
+                        <p class="text-gray-600 mb-4">引进先进种植技术，提高莲藕产量和品质，降低种植成本。</p>
+                        <a href="news.html" class="text-green-600 hover:text-green-800 font-medium">
+                            阅读更多 →
+                        </a>
+                    </div>
+                </article>
+                
+                <!-- News 3 -->
+                <article class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover reveal-element">
+                    <div class="h-48 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
+                        <img src="resources/premium-lotus-roots.png" alt="产品展示" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="text-sm text-green-600 mb-2">2024年9月</div>
+                        <h3 class="text-xl font-bold text-green-800 mb-3">新产品上线</h3>
+                        <p class="text-gray-600 mb-4">推出有机认证莲藕系列产品，满足不同客户需求。</p>
+                        <a href="news.html" class="text-green-600 hover:text-green-800 font-medium">
+                            阅读更多 →
+                        </a>
+                    </div>
+                </article>
+            </div>
+            
+            <div class="text-center mt-12 reveal-element">
+                <a href="news.html" class="btn-primary text-white px-8 py-4 rounded-full font-medium text-lg inline-block">
+                    查看更多资讯
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-green-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="text-2xl font-serif font-bold">汉津莲源</div>
+                        <div class="ml-2 text-sm font-decorative">种藕基地</div>
+                    </div>
+                    <p class="text-green-200 mb-4">
+                        专业莲藕种植基地，传承百年种植技艺，为您提供最优质的莲藕产品。
+                    </p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">快速链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-green-200 hover:text-white">首页</a></li>
+                        <li><a href="products.html" class="text-green-200 hover:text-white">产品中心</a></li>
+                        <li><a href="about.html" class="text-green-200 hover:text-white">关于我们</a></li>
+                        <li><a href="news.html" class="text-green-200 hover:text-white">新闻资讯</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">联系我们</h4>
+                    <ul class="space-y-2 text-green-200">
+                        <li>📍 武汉市蔡甸区</li>
+                        <li>📞 400-123-4567</li>
+                        <li>✉️ info@hanjinlianyuan.com</li>
+                    </ul>
+                </div>
+                
+                <!-- Social Media -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">关注我们</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-green-200 hover:text-white">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-green-200 hover:text-white">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-green-800 mt-8 pt-8 text-center text-green-200">
+                <p>&copy; 2024 汉津莲源种藕基地. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品中心 - 汉津莲源种藕基地</title>
+    <meta name="description" content="汉津莲源种藕基地产品中心，提供新鲜莲藕、种藕种苗、有机莲藕等优质产品">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    
+    <!-- Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary-green: #2D5A27;
+            --secondary-green: #7FB069;
+            --accent-gold: #D4A574;
+            --neutral-light: #F8F9FA;
+            --text-dark: #1F2937;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            line-height: 1.6;
+        }
+        
+        .font-serif {
+            font-family: 'Noto Serif SC', serif;
+        }
+        
+        .font-decorative {
+            font-family: 'ZCOOL KuaiLe', cursive;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(45, 90, 39, 0.2);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45, 90, 39, 0.3);
+        }
+        
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .reveal-element.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .navbar-glass {
+            background: rgba(248, 249, 250, 0.95);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-solid {
+            background: var(--neutral-light);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .filter-active {
+            background: var(--secondary-green);
+            color: white;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .cart-sidebar {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .cart-sidebar.open {
+            transform: translateX(0);
+        }
+        
+        .modal {
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .modal.show .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 navbar-glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="text-2xl font-serif font-bold text-green-800">
+                        汉津莲源
+                    </div>
+                    <div class="ml-2 text-sm text-green-600 font-decorative">
+                        种藕基地
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-green-800 hover:text-green-600 font-medium transition-colors">首页</a>
+                    <a href="products.html" class="nav-link text-green-600 font-medium">产品中心</a>
+                    <a href="about.html" class="nav-link text-green-800 hover:text-green-600 font-medium transition-colors">关于我们</a>
+                    <a href="news.html" class="nav-link text-green-800 hover:text-green-600 font-medium transition-colors">新闻资讯</a>
+                    
+                    <!-- Cart Button -->
+                    <button id="cart-btn" class="relative text-green-800 hover:text-green-600 font-medium transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6"></path>
+                        </svg>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-green-800 hover:text-green-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <div class="px-4 py-2 space-y-2">
+                <a href="index.html" class="block py-2 text-green-800 hover:text-green-600">首页</a>
+                <a href="products.html" class="block py-2 text-green-600">产品中心</a>
+                <a href="about.html" class="block py-2 text-green-800 hover:text-green-600">关于我们</a>
+                <a href="news.html" class="block py-2 text-green-800 hover:text-green-600">新闻资讯</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Page Header -->
+    <section class="pt-24 pb-12 bg-gradient-to-r from-green-50 to-green-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center reveal-element">
+                <h1 class="text-4xl md:text-5xl font-serif font-bold text-green-800 mb-4">
+                    产品中心
+                </h1>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    精选优质莲藕产品，满足您的各种需求
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Filters Sidebar -->
+                <div class="lg:w-1/4">
+                    <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+                        <h3 class="text-xl font-bold text-green-800 mb-6">产品筛选</h3>
+                        
+                        <!-- Category Filter -->
+                        <div class="mb-6">
+                            <h4 class="font-semibold text-gray-800 mb-3">产品类别</h4>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="category-filter mr-2" value="all" checked>
+                                    <span>全部产品</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="category-filter mr-2" value="fresh">
+                                    <span>新鲜莲藕</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="category-filter mr-2" value="seed">
+                                    <span>种藕种苗</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="category-filter mr-2" value="organic">
+                                    <span>有机莲藕</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="category-filter mr-2" value="processed">
+                                    <span>加工产品</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Price Filter -->
+                        <div class="mb-6">
+                            <h4 class="font-semibold text-gray-800 mb-3">价格区间</h4>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="radio" name="price" class="price-filter mr-2" value="all" checked>
+                                    <span>全部价格</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="price" class="price-filter mr-2" value="0-20">
+                                    <span>¥0 - ¥20</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="price" class="price-filter mr-2" value="20-50">
+                                    <span>¥20 - ¥50</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="price" class="price-filter mr-2" value="50+">
+                                    <span>¥50以上</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Sort Options -->
+                        <div class="mb-6">
+                            <h4 class="font-semibold text-gray-800 mb-3">排序方式</h4>
+                            <select id="sort-select" class="w-full p-2 border border-gray-300 rounded-lg">
+                                <option value="default">默认排序</option>
+                                <option value="price-low">价格从低到高</option>
+                                <option value="price-high">价格从高到低</option>
+                                <option value="name">名称排序</option>
+                                <option value="popular">热门程度</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Reset Button -->
+                        <button id="reset-filters" class="w-full bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">
+                            重置筛选
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Products Grid -->
+                <div class="lg:w-3/4">
+                    <!-- Search Bar -->
+                    <div class="mb-8">
+                        <div class="relative">
+                            <input type="text" id="search-input" placeholder="搜索产品..." 
+                                   class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                            <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Results Info -->
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="text-gray-600">
+                            共找到 <span id="results-count">12</span> 个产品
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button id="grid-view" class="p-2 text-green-600 bg-green-100 rounded">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                </svg>
+                            </button>
+                            <button id="list-view" class="p-2 text-gray-400 hover:text-green-600 rounded">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Products Container -->
+                    <div id="products-container" class="product-grid">
+                        <!-- Products will be dynamically loaded here -->
+                    </div>
+                    
+                    <!-- Load More Button -->
+                    <div class="text-center mt-12">
+                        <button id="load-more" class="btn-primary text-white px-8 py-4 rounded-full font-medium text-lg">
+                            加载更多产品
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="cart-sidebar fixed top-0 right-0 w-96 h-full bg-white shadow-2xl z-50 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-green-800">购物车</h3>
+                <button id="close-cart" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="cart-items" class="space-y-4 mb-6">
+                <!-- Cart items will be dynamically loaded here -->
+            </div>
+            
+            <div class="border-t pt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-semibold">总计:</span>
+                    <span id="cart-total" class="text-xl font-bold text-green-600">¥0.00</span>
+                </div>
+                <button id="checkout-btn" class="w-full btn-primary text-white py-3 rounded-lg font-medium">
+                    立即结算
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 id="modal-title" class="text-2xl font-bold text-green-800"></h3>
+                    <button id="close-modal" class="text-gray-400 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <div id="modal-images" class="space-y-4">
+                            <!-- Product images will be loaded here -->
+                        </div>
+                    </div>
+                    <div>
+                        <div id="modal-details" class="space-y-4">
+                            <!-- Product details will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-green-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="text-2xl font-serif font-bold">汉津莲源</div>
+                        <div class="ml-2 text-sm font-decorative">种藕基地</div>
+                    </div>
+                    <p class="text-green-200 mb-4">
+                        专业莲藕种植基地，传承百年种植技艺，为您提供最优质的莲藕产品。
+                    </p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">快速链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-green-200 hover:text-white">首页</a></li>
+                        <li><a href="products.html" class="text-green-200 hover:text-white">产品中心</a></li>
+                        <li><a href="about.html" class="text-green-200 hover:text-white">关于我们</a></li>
+                        <li><a href="news.html" class="text-green-200 hover:text-white">新闻资讯</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">联系我们</h4>
+                    <ul class="space-y-2 text-green-200">
+                        <li>📍 武汉市蔡甸区</li>
+                        <li>📞 400-123-4567</li>
+                        <li>✉️ info@hanjinlianyuan.com</li>
+                    </ul>
+                </div>
+                
+                <!-- Social Media -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">关注我们</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-green-200 hover:text-white">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-green-200 hover:text-white">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-green-800 mt-8 pt-8 text-center text-green-200">
+                <p>&copy; 2024 汉津莲源种藕基地. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+    <script>
+        // 产品数据
+        const products = [
+            {
+                id: 1,
+                name: "新鲜莲藕",
+                category: "fresh",
+                price: 15.8,
+                originalPrice: 18.0,
+                image: "https://kimi-web-img.moonshot.cn/img/img.21food.com/c79d24f51f51d58b490329a03316aa40418cb897.jpg",
+                images: [
+                    "https://kimi-web-img.moonshot.cn/img/img.21food.com/c79d24f51f51d58b490329a03316aa40418cb897.jpg",
+                    "https://kimi-web-img.moonshot.cn/img/thehakkacookbook.com/e732e88c3581ef227d4667a5ef1df2f1d161f953.jpg"
+                ],
+                description: "精选优质莲藕，口感清脆，营养丰富。采用传统有机种植方法，不使用化学农药，保证莲藕的天然纯净品质。",
+                specs: {
+                    "产地": "武汉蔡甸",
+                    "规格": "500g/根",
+                    "保质期": "7天",
+                    "储存方法": "冷藏保存"
+                },
+                nutrition: {
+                    "能量": "74千卡",
+                    "蛋白质": "2.6g",
+                    "脂肪": "0.1g",
+                    "碳水化合物": "17.2g"
+                },
+                stock: 100,
+                popular: true
+            },
+            {
+                id: 2,
+                name: "种藕种苗",
+                category: "seed",
+                price: 28.0,
+                originalPrice: 32.0,
+                image: "https://kimi-web-img.moonshot.cn/img/strictlymedicinalseeds.com/598c70bcf67b18e46f26dc01fff01a880099934e.jpg",
+                images: [
+                    "https://kimi-web-img.moonshot.cn/img/strictlymedicinalseeds.com/598c70bcf67b18e46f26dc01fff01a880099934e.jpg",
+                    "https://kimi-web-img.moonshot.cn/img/assets-kenaqgardens-org.s3.amazonaws.com/160f301e96bd664215f07059ed2c8979cdd29730.png"
+                ],
+                description: "优质种藕种苗，成活率高，产量稳定。经过严格筛选，确保种苗品质，适合大规模种植。",
+                specs: {
+                    "产地": "武汉蔡甸",
+                    "规格": "10株/包",
+                    "成活率": "95%以上",
+                    "种植季节": "春季"
+                },
+                nutrition: {},
+                stock: 50,
+                popular: false
+            },
+            {
+                id: 3,
+                name: "有机莲藕",
+                category: "organic",
+                price: 25.6,
+                originalPrice: 30.0,
+                image: "https://kimi-web-img.moonshot.cn/img/naturallifestylemarket.com/4dc1a12a4b02d39262699b35830f4fc56f8f63f2.jpg",
+                images: [
+                    "https://kimi-web-img.moonshot.cn/img/naturallifestylemarket.com/4dc1a12a4b02d39262699b35830f4fc56f8f63f2.jpg",
+                    "https://kimi-web-img.moonshot.cn/img/www.sigmatest.org/d39d395822b383efc8380e64fe501a8fb1cae98c.jpg"
+                ],
+                description: "有机认证莲藕，无农药残留，健康安全。通过严格的有机认证，是健康生活的最佳选择。",
+                specs: {
+                    "产地": "武汉蔡甸",
+                    "规格": "400g/根",
+                    "认证": "有机认证",
+                    "保质期": "5天"
+                },
+                nutrition: {
+                    "能量": "74千卡",
+                    "蛋白质": "2.6g",
+                    "脂肪": "0.1g",
+                    "碳水化合物": "17.2g"
+                },
+                stock: 80,
+                popular: true
+            },
+            {
+                id: 4,
+                name: "莲藕片",
+                category: "processed",
+                price: 35.0,
+                originalPrice: 40.0,
+                image: "https://kimi-web-img.moonshot.cn/img/www.tastingtable.com/1bcd2dc1dfd397a66787ff6dc235e9f9ca843230.jpg",
+                images: [
+                    "https://kimi-web-img.moonshot.cn/img/www.tastingtable.com/1bcd2dc1dfd397a66787ff6dc235e9f9ca843230.jpg"
+                ],
+                description: "精选莲藕切片，方便快捷，适合烹饪。经过专业加工处理，保持莲藕的原有营养和口感。",
+                specs: {
+                    "产地": "武汉蔡甸",
+                    "规格": "300g/包",
+                    "加工方式": "真空包装",
+                    "保质期": "12个月"
+                },
+                nutrition: {
+                    "能量": "74千卡",
+                    "蛋白质": "2.6g",
+                    "脂肪": "0.1g",
+                    "碳水化合物": "17.2g"
+                },
+                stock: 200,
+                popular: false
+            },
+            {
+                id: 5,
+                name: "莲藕粉",
+                category: "processed",
+                price: 45.0,
+                originalPrice: 50.0,
+                image: "https://kimi-web-img.moonshot.cn/img/images.onlymyhealth.com/5742e9f7f967b06e97b272180271e30942d3856c.jpg",
+                images: [
+                    "https://kimi-web-img.moonshot.cn/img/images.onlymyhealth.com/5742e9f7f967b06e97b272180271e30942d3856c.jpg"
+                ],
+                description: "纯天然莲藕粉，营养丰富，易于吸收。采用先进工艺制作，保留了莲藕的原有营养成分。",
+                specs: {
+                    "产地": "武汉蔡甸",
+                    "规格": "500g/罐",
+                    "纯度": "100%",
+                    "保质期": "24个月"
+                },
+                nutrition: {
+                    "能量": "350千卡",
+                    "蛋白质": "8.5g",
+                    "脂肪": "0.5g",
+                    "碳水化合物": "85g"
+                },
+                stock: 150,
+                popular: true
+            },
+            {
+                id: 6,
+                name: "特级莲藕",
+                category: "fresh",
+                price: 22.8,
+                originalPrice: 26.0,
+                image: "https://kimi-web-img.moonshot.cn/img/www.usbiopower.com/70564538165818be75c44db51a57a5b3a3bbe2ab.jpg",
+                images: [
+                    "https://kimi-web-img.moonshot.cn/img/www.usbiopower.com/70564538165818be75c44db51a57a5b3a3bbe2ab.jpg"
+                ],
+                description: "特级莲藕，品质上乘，外观完美。精选最优质的莲藕，是送礼和高档餐饮的最佳选择。",
+                specs: {
+                    "产地": "武汉蔡甸",
+                    "规格": "600g/根",
+                    "等级": "特级",
+                    "保质期": "7天"
+                },
+                nutrition: {
+                    "能量": "74千卡",
+                    "蛋白质": "2.6g",
+                    "脂肪": "0.1g",
+                    "碳水化合物": "17.2g"
+                },
+                stock: 60,
+                popular: false
+            }
+        ];
+        
+        // 初始化产品页面
+        document.addEventListener('DOMContentLoaded', function() {
+            initProductsPage();
+        });
+        
+        function initProductsPage() {
+            renderProducts(products);
+            initFilters();
+            initSearch();
+            initCart();
+            initModal();
+            initScrollAnimations();
+        }
+        
+        function renderProducts(productsToRender) {
+            const container = document.getElementById('products-container');
+            const resultsCount = document.getElementById('results-count');
+            
+            resultsCount.textContent = productsToRender.length;
+            
+            container.innerHTML = productsToRender.map(product => `
+                <div class="product-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover reveal-element" 
+                     data-product-id="${product.id}"
+                     data-product-name="${product.name}"
+                     data-product-price="${product.price}"
+                     data-product-image="${product.image}">
+                    <div class="relative">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+                        ${product.popular ? '<div class="absolute top-4 left-4 bg-red-500 text-white px-2 py-1 rounded-full text-xs">热门</div>' : ''}
+                        ${product.originalPrice > product.price ? '<div class="absolute top-4 right-4 bg-green-500 text-white px-2 py-1 rounded-full text-xs">优惠</div>' : ''}
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-2">${product.name}</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-2">${product.description}</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-2xl font-bold text-green-600">¥${product.price}</span>
+                                ${product.originalPrice > product.price ? `<span class="text-gray-400 line-through">¥${product.originalPrice}</span>` : ''}
+                            </div>
+                            <span class="text-sm text-gray-500">库存: ${product.stock}</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="flex-1 btn-primary text-white py-2 px-4 rounded-lg font-medium add-to-cart-btn">
+                                加入购物车
+                            </button>
+                            <button class="px-4 py-2 border border-green-600 text-green-600 rounded-lg hover:bg-green-50 view-details-btn" data-product-id="${product.id}">
+                                查看详情
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // 重新初始化滚动动画
+            initScrollAnimations();
+        }
+        
+        function initFilters() {
+            const categoryFilters = document.querySelectorAll('.category-filter');
+            const priceFilters = document.querySelectorAll('.price-filter');
+            const sortSelect = document.getElementById('sort-select');
+            const resetBtn = document.getElementById('reset-filters');
+            
+            // 类别筛选
+            categoryFilters.forEach(filter => {
+                filter.addEventListener('change', applyFilters);
+            });
+            
+            // 价格筛选
+            priceFilters.forEach(filter => {
+                filter.addEventListener('change', applyFilters);
+            });
+            
+            // 排序
+            sortSelect.addEventListener('change', applyFilters);
+            
+            // 重置筛选
+            resetBtn.addEventListener('click', resetFilters);
+        }
+        
+        function applyFilters() {
+            let filteredProducts = [...products];
+            
+            // 类别筛选
+            const selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked'))
+                .map(cb => cb.value)
+                .filter(val => val !== 'all');
+            
+            if (selectedCategories.length > 0) {
+                filteredProducts = filteredProducts.filter(product => 
+                    selectedCategories.includes(product.category)
+                );
+            }
+            
+            // 价格筛选
+            const selectedPrice = document.querySelector('.price-filter:checked').value;
+            if (selectedPrice !== 'all') {
+                const [min, max] = selectedPrice.split('-').map(p => p.replace('+', ''));
+                filteredProducts = filteredProducts.filter(product => {
+                    if (max) {
+                        return product.price >= parseFloat(min) && product.price <= parseFloat(max);
+                    } else {
+                        return product.price >= parseFloat(min);
+                    }
+                });
+            }
+            
+            // 搜索筛选
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            if (searchTerm) {
+                filteredProducts = filteredProducts.filter(product =>
+                    product.name.toLowerCase().includes(searchTerm) ||
+                    product.description.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // 排序
+            const sortBy = document.getElementById('sort-select').value;
+            switch (sortBy) {
+                case 'price-low':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'name':
+                    filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'popular':
+                    filteredProducts.sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
+                    break;
+            }
+            
+            renderProducts(filteredProducts);
+        }
+        
+        function resetFilters() {
+            document.querySelector('.category-filter[value="all"]').checked = true;
+            document.querySelector('.price-filter[value="all"]').checked = true;
+            document.getElementById('sort-select').value = 'default';
+            document.getElementById('search-input').value = '';
+            
+            categoryFilters.forEach(cb => {
+                if (cb.value !== 'all') cb.checked = false;
+            });
+            
+            applyFilters();
+        }
+        
+        function initSearch() {
+            const searchInput = document.getElementById('search-input');
+            let searchTimeout;
+            
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    applyFilters();
+                }, 300);
+            });
+        }
+        
+        function initCart() {
+            const cartBtn = document.getElementById('cart-btn');
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const closeCart = document.getElementById('close-cart');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            
+            cartBtn.addEventListener('click', () => {
+                cartSidebar.classList.add('open');
+            });
+            
+            closeCart.addEventListener('click', () => {
+                cartSidebar.classList.remove('open');
+            });
+            
+            checkoutBtn.addEventListener('click', () => {
+                alert('结算功能开发中...');
+            });
+            
+            // 添加到购物车按钮事件
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('add-to-cart-btn')) {
+                    const productCard = e.target.closest('.product-card');
+                    const product = {
+                        id: parseInt(productCard.dataset.productId),
+                        name: productCard.dataset.productName,
+                        price: parseFloat(productCard.dataset.productPrice),
+                        image: productCard.dataset.productImage
+                    };
+                    
+                    window.shoppingCart.addItem(product);
+                }
+            });
+        }
+        
+        function initModal() {
+            const modal = document.getElementById('product-modal');
+            const closeModal = document.getElementById('close-modal');
+            
+            // 查看详情按钮事件
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('view-details-btn')) {
+                    const productId = parseInt(e.target.dataset.productId);
+                    const product = products.find(p => p.id === productId);
+                    showProductModal(product);
+                }
+            });
+            
+            closeModal.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        }
+        
+        function showProductModal(product) {
+            const modal = document.getElementById('product-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalImages = document.getElementById('modal-images');
+            const modalDetails = document.getElementById('modal-details');
+            
+            modalTitle.textContent = product.name;
+            
+            // 渲染图片
+            modalImages.innerHTML = `
+                <div class="splide" id="product-images-slider">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            ${product.images.map(img => `
+                                <li class="splide__slide">
+                                    <img src="${img}" alt="${product.name}" class="w-full h-64 object-cover rounded-lg">
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            // 渲染详情
+            modalDetails.innerHTML = `
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-lg font-semibold text-green-800 mb-2">产品介绍</h4>
+                        <p class="text-gray-600">${product.description}</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-semibold text-green-800 mb-2">产品规格</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            ${Object.entries(product.specs).map(([key, value]) => `
+                                <div>
+                                    <span class="font-medium">${key}:</span>
+                                    <span class="text-gray-600">${value}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    ${Object.keys(product.nutrition).length > 0 ? `
+                        <div>
+                            <h4 class="text-lg font-semibold text-green-800 mb-2">营养成分</h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                ${Object.entries(product.nutrition).map(([key, value]) => `
+                                    <div>
+                                        <span class="font-medium">${key}:</span>
+                                        <span class="text-gray-600">${value}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-3xl font-bold text-green-600">¥${product.price}</span>
+                            ${product.originalPrice > product.price ? `<span class="text-gray-400 line-through">¥${product.originalPrice}</span>` : ''}
+                        </div>
+                        <span class="text-sm text-gray-500">库存: ${product.stock}</span>
+                    </div>
+                    
+                    <button class="w-full btn-primary text-white py-3 rounded-lg font-medium add-to-cart-btn" 
+                            data-product-id="${product.id}"
+                            data-product-name="${product.name}"
+                            data-product-price="${product.price}"
+                            data-product-image="${product.image}">
+                        加入购物车
+                    </button>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            
+            // 初始化图片轮播
+            setTimeout(() => {
+                new Splide('#product-images-slider').mount();
+            }, 100);
+        }
+        
+        function initScrollAnimations() {
+            const revealElements = document.querySelectorAll('.reveal-element');
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            revealElements.forEach(element => {
+                revealObserver.observe(element);
+            });
+        }
+    </script>
+</body>
+</html>
